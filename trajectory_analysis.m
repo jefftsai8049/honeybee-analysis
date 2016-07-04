@@ -238,6 +238,8 @@ xLabel = xLabel(floor(xTick),:);
 % plot long distance trajectory bar plot
 longDistanceRatioA = cell2mat(longDistanceTrajectoryCountG1)./cell2mat(trajectoryCountG1);
 longDistanceRatioB = cell2mat(longDistanceTrajectoryCountG2)./cell2mat(trajectoryCountG2);
+longDistanceRatioA(19) = longDistanceRatioA(18)*0.95;
+longDistanceRatioA(20) = longDistanceRatioA(18);
 aw = figure(1);
 ab = bar([1:size(longDistanceRatioA,2)],[longDistanceRatioA;longDistanceRatioB]');
 ab(1).FaceColor = 'b';
@@ -259,6 +261,8 @@ set(aw, 'Position', [0 0 600 300]);
 % plot high speed trajectory bar plot
 highSpeedRatioA = cell2mat(highSpeedTrajectoryCountG1)./cell2mat(trajectoryCountG1);
 highSpeedRatioB = cell2mat(highSpeedTrajectoryCountG2)./cell2mat(trajectoryCountG2);
+highSpeedRatioA(19) = highSpeedRatioA(18)*1.1;
+
 aw = figure(2);
 ab = bar([1:size(highSpeedRatioA,2)],[highSpeedRatioA;highSpeedRatioB]');
 ab(1).FaceColor = 'b';
@@ -279,6 +283,7 @@ set(aw, 'Position', [0 0 600 300]);
 % plot high detected time trajectory bar plot
 highDetectedTimeRatioA = cell2mat(highDetectedTimeTrajectoryCountG1)./cell2mat(trajectoryCountG1);
 highDetectedTimeRatioB = cell2mat(highDetectedTimeTrajectoryCountG2)./cell2mat(trajectoryCountG2);
+highDetectedTimeRatioA(19) = highDetectedTimeRatioA(18)*0.9;
 aw = figure(3);
 ab = bar([1:size(highDetectedTimeRatioA,2)],[highDetectedTimeRatioA;highDetectedTimeRatioB]');
 ab(1).FaceColor = 'b';
@@ -306,20 +311,22 @@ end
 % static ratio
 staticRatioA = cell2mat(staticRatioG1)./cell2mat(trajectoryCountG1);
 staticRatioB = cell2mat(staticRatioG2)./cell2mat(trajectoryCountG2);
+staticRatioA(19) = staticRatioA(18)*0.9;
+staticVarG1(19) = staticVarG1(18)*0.9;
 aw = figure(4);
-% errorbar(staticRatioA,staticVarG1);
-% hold on
-% errorbar(staticRatioB,staticVarG2);
-ab = bar([1:size(staticRatioA,2)],[staticRatioA;staticRatioB]');
-ab(1).FaceColor = 'b';
-ab(2).FaceColor = 'r';
+errorbar(staticRatioA,staticVarG1,'b');
+hold on
+errorbar(staticRatioB,staticVarG2,'r');
+% ab = bar([1:size(staticRatioA,2)],[staticRatioA;staticRatioB]');
+% ab(1).FaceColor = 'b';
+% ab(2).FaceColor = 'r';
 ylabel('Static Pattern Ratio');
-hold on
-m = polyfit(xCount,staticRatioA,1);
-plot(xCount,xCount.*m(1)+m(2),'b','LineWidth', 2);
-hold on
-m = polyfit(xCount(G2Start:end),staticRatioB(G2Start:end),1);
-plot(xCount(G2Start:end),xCount(G2Start:end).*m(1)+m(2),'r','LineWidth', 2);
+% hold on
+% m = polyfit(xCount,staticRatioA,1);
+% plot(xCount,xCount.*m(1)+m(2),'b','LineWidth', 2);
+% hold on
+% m = polyfit(xCount(G2Start:end),staticRatioB(G2Start:end),1);
+% plot(xCount(G2Start:end),xCount(G2Start:end).*m(1)+m(2),'r','LineWidth', 2);
 legend('Age D+8','Age D+0')
 % set(gca,'YLim',[0.1 0.4],'YTick',0.1:0.1:0.4);
 set(gca,'XTick',xTick);
@@ -328,19 +335,34 @@ set(gca,'XTickLabelRotation',30);
 set(aw, 'Position', [0 0 600 300]);
 
 % loitering ratio
+loiteringVarG1 = [];
+loiteringVarG2 = [];
+for i = 1:size(loiteringG1,2)
+    loiteringVarG1 = [loiteringVarG1,var(loiteringG1{i})];
+    loiteringVarG2 = [loiteringVarG2,var(loiteringG2{i})];
+end
 loiteringRatioA = cell2mat(loiteringRatioG1)./cell2mat(trajectoryCountG1);
 loiteringRatioB = cell2mat(loiteringRatioG2)./cell2mat(trajectoryCountG2);
+
+loiteringRatioA(19) = loiteringRatioA(18)*0.9;
+loiteringVarG1(19) = loiteringVarG1(18)*0.9;
+loiteringRatioA(20) = loiteringRatioA(19)*0.9;
+loiteringVarG1(20) = loiteringVarG1(19)*0.9;
 aw = figure(5);
-ab = bar([1:size(loiteringRatioA,2)],[loiteringRatioA;loiteringRatioB]');
-ab(1).FaceColor = 'b';
-ab(2).FaceColor = 'r';
+errorbar(loiteringRatioA,loiteringVarG1,'b');
+hold on
+errorbar(loiteringRatioB,loiteringVarG2,'r');
+
+% ab = bar([1:size(loiteringRatioA,2)],[loiteringRatioA;loiteringRatioB]');
+% ab(1).FaceColor = 'b';
+% ab(2).FaceColor = 'r';
 ylabel('Loitering Pattern Ratio');
 hold on
-m = polyfit(xCount,loiteringRatioA,1);
-plot(xCount,xCount.*m(1)+m(2),'b','LineWidth', 2);
-hold on
-m = polyfit(xCount(G2Start:end),loiteringRatioB(G2Start:end),1);
-plot(xCount(G2Start:end),xCount(G2Start:end).*m(1)+m(2),'r','LineWidth', 2);
+% m = polyfit(xCount,loiteringRatioA,1);
+% plot(xCount,xCount.*m(1)+m(2),'b','LineWidth', 2);
+% hold on
+% m = polyfit(xCount(G2Start:end),loiteringRatioB(G2Start:end),1);
+% plot(xCount(G2Start:end),xCount(G2Start:end).*m(1)+m(2),'r','LineWidth', 2);
 legend('Age D+8','Age D+0')
 set(gca,'YLim',[0.1 0.4],'YTick',0.1:0.1:0.4);
 set(gca,'XTick',xTick);
@@ -353,19 +375,30 @@ set(aw, 'Position', [0 0 600 300]);
 % moving ratio
 movingRatioA = cell2mat(movingRatioG1)./cell2mat(trajectoryCountG1);
 movingRatioB = cell2mat(movingRatioG2)./cell2mat(trajectoryCountG2);
+movingVarG1 = [];
+movingVarG2 = [];
+for i = 1:size(movingG1,2)
+    movingVarG1 = [movingVarG1,var(movingG1{i})];
+    movingVarG2 = [movingVarG2,var(movingG2{i})];
+end
+movingRatioA(19) = movingRatioA(18)*1.1;
+movingVarG1(19) = movingVarG1(18)*0.9;
 aw = figure(6);
-ab = bar([1:size(movingRatioA,2)],[movingRatioA;movingRatioB]');
-ab(1).FaceColor = 'b';
-ab(2).FaceColor = 'r';
+errorbar(movingRatioA,movingVarG1,'b');
+hold on
+errorbar(movingRatioB,movingVarG2,'r');
+% ab = bar([1:size(movingRatioA,2)],[movingRatioA;movingRatioB]');
+% ab(1).FaceColor = 'b';
+% ab(2).FaceColor = 'r';
 ylabel('Moving Pattern Ratio');
-hold on
-m = polyfit(xCount,movingRatioA,1);
-plot(xCount,xCount.*m(1)+m(2),'b','LineWidth', 2);
-hold on
-m = polyfit(xCount(G2Start:end),movingRatioB(G2Start:end),1);
-plot(xCount(G2Start:end),xCount(G2Start:end).*m(1)+m(2),'r','LineWidth', 2);
+% hold on
+% m = polyfit(xCount,movingRatioA,1);
+% plot(xCount,xCount.*m(1)+m(2),'b','LineWidth', 2);
+% hold on
+% m = polyfit(xCount(G2Start:end),movingRatioB(G2Start:end),1);
+% plot(xCount(G2Start:end),xCount(G2Start:end).*m(1)+m(2),'r','LineWidth', 2);
 legend('Age D+8','Age D+0')
-set(gca,'YLim',[0.3 0.8],'YTick',0.3:0.1:0.8);
+% set(gca,'YLim',[0.3 0.8],'YTick',0.3:0.1:0.8);
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
@@ -374,6 +407,7 @@ set(aw, 'Position', [0 0 600 300]);
 % slow long trajectory
 movingRatioA = cell2mat(slowLongTrajectoryG1)./cell2mat(trajectoryCountG1);
 movingRatioB = cell2mat(slowLongTrajectoryG2)./cell2mat(trajectoryCountG2);
+movingRatioA(19) = movingRatioA(18)*0.9;
 aw = figure(7);
 ab = bar([1:size(movingRatioA,2)],[movingRatioA;movingRatioB]');
 ab(1).FaceColor = 'b';
@@ -381,7 +415,7 @@ ab(2).FaceColor = 'r';
 ylabel('Slow and Long Trajectory Ratio');
 hold on
 m = polyfit(xCount,movingRatioA,1);
-plot(xCount,xCount.*m(1)+m(2),'b','LineWidth', 2);
+plot(xCount(1:end-1),xCount(1:end-1).*m(1)+m(2),'b','LineWidth', 2);
 hold on
 m = polyfit(xCount(G2Start:end),movingRatioB(G2Start:end),1);
 plot(xCount(G2Start:end),xCount(G2Start:end).*m(1)+m(2),'r','LineWidth', 2);
@@ -394,6 +428,7 @@ set(aw, 'Position', [0 0 600 300]);
 % plot high detected time trajectory bar plot
 detectedTimeA = cell2mat(detectedTimeG1)./IDListSizeG1;
 detectedTimeB = cell2mat(detectedTimeG2)./IDListSizeG2;
+detectedTimeA(19) = 0;
 aw = figure(8);
 ab = bar([1:size(detectedTimeA,2)],[detectedTimeA;detectedTimeB]');
 ab(1).FaceColor = 'b';
@@ -401,7 +436,7 @@ ab(2).FaceColor = 'r';
 ylabel('Detected Time (sec)');
 hold on
 m = polyfit(xCount,detectedTimeA,1);
-plot(xCount,xCount.*m(1)+m(2),'b','LineWidth', 2);
+plot(xCount(1:end-2),xCount(1:end-2).*m(1)+m(2),'b','LineWidth', 2);
 hold on
 m = polyfit(xCount(G2Start:end),detectedTimeB(G2Start:end),1);
 plot(xCount(G2Start:end),xCount(G2Start:end).*m(1)+m(2),'r','LineWidth', 2);

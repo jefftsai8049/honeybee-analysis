@@ -4,7 +4,7 @@ clear all;
 close all;
 
 dataSet = 'bee_info_5_new';
-day = '06-10';
+day = '06-29';
 
 fileName = [dataSet,'/days/',day,'/individual_PCA.csv'];
 
@@ -41,7 +41,7 @@ set(gca,'XTick' , labelX)
 set(gca,'XTickLabel', num2str(labelX' , '%0.2f'))
 
 % legend('Field bee','In-hive bee');
-legend('Age D+7','Age D+0');
+legend('Age D+8','Age D+0');
 xlabel('PC1');
 ylabel('PC2')
 
