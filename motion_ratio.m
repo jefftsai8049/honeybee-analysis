@@ -22,29 +22,29 @@ for i = 1:size(days,1)
     end
 end
 %%
-% clear i j
-%
-% targetID = 'AA';
-% for i = 1:size(labelY,2)
-%     for j = 1:size(labelY{i},1)
-%         if targetID == labelY{i}{j}
-%             targetIDIndex{i} = j;
-%             break
-%         end
-%         targetIDIndex{i} = 0;
-%     end
-% end
+clear i j
+
+targetID = 'AA';
+for i = 1:size(labelY,2)
+    for j = 1:size(labelY{i},1)
+        if targetID == labelY{i}{j}
+            targetIDIndex{i} = j;
+            break
+        end
+        targetIDIndex{i} = 0;
+    end
+end
 %%
 
-% data = zeros(size(labelY,2),6);
-% for i = 1:size(labelY,2)
-%     if targetIDIndex{i} > 0
-%         data(i,:) = x{i}(targetIDIndex{i},:);
-%
-%     subplot(4,ceil(size(labelY,2)/4),i);
-%     pie(data(i,:));
-%     end
-% end
+data = zeros(size(labelY,2),6);
+for i = 1:size(labelY,2)
+    if targetIDIndex{i} > 0
+        data(i,:) = x{i}(targetIDIndex{i},:);
+
+    subplot(4,ceil(size(labelY,2)/4),i);
+    pie(data(i,:));
+    end
+end
 
 %%
 sumG1 = [];

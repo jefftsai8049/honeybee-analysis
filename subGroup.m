@@ -2,9 +2,16 @@ clear all
 close all
 clc
 
-subG1 = {'AF';'AO';'AR';'BA';'BB';'BG';'BK';'BL';'BO';'BP';'BR';'BS';'BU';'BY';'BZ';'CA';'CG';'CH';'CK';'CP';'EA';'FC';'FE';'FF';'FL';'FT';'FZ';'GL';'GP';};
+% subG1 = {'AF';'AO';'AR';'BA';'BB';'BG';'BK';'BL';'BO';'BP';'BR';'BS';'BU';'BY';'BZ';'CA';'CG';'CH';'CK';'CP';'EA';'FC';'FE';'FF';'FL';'FT';'FZ';'GL';'GP';};
+% subG1 = {'AA';'AC';'AG';'AL';'AP';'AR';'AT';'AV';'BB';'BF';'BH';'BO';'BP';'BP';'BR';'BT';'BY';'BZ';'CF';'CH';'CR';'CP';'CT';'CG';'CZ';'EB';'EG';'DA';'FB';'FE';'FF';'FC';'FG';'FH';'FL';'FK';'FR';'FT';'FY';'GA';'GB';'GC';'GF';'GK';'GP';'GO';'GT';'GZ'};;
+% subG1 = {'AR';'BB';'BO';'BP';'BR';'BY';'BZ';'CH';'CP';'FE';'FF';'FL';'GP'};
+% subG1 = {'AF';'AO';'BA';'BG';'BK';'BL';'BS';'BU';'CA';'CG';'CK';'CP';'EA';'FC';'FT';'FZ';'GL';};
+% subG1 = {'AF';'BG';'BP';'BO';'AO';'BB'};
+subG1 = {'AO'};
+
 subG2 = {'HB';'HE';'HL';'HO';'HS';'HZ';'KG';'KK';'KZ';'LH';'LL';'LO';'LP';'LS';'LY';'OA';'OB';'OH';'OO';'OY';'OZ';'PB';'PC';'PL';'PZ';'RA';'RB';'RE';'RF';'RK';'RO';'RR';'RT';'RU';};
-file = fopen('bee_info_5_new/all/trajectory_info.csv');
+dataSet = 'bee_info_5_new';
+file = fopen([dataSet,'/all/trajectory_info.csv']);
 longDistanceThreshold = 1000;
 highSpeedThreshold = 40;
 slowSpeedThreshold = 30;
@@ -406,12 +413,17 @@ longDistanceRatioD = cell2mat(longDistanceTrajectoryCountG4)./cell2mat(trajector
 % longDistanceRatioC = (longDistanceRatioC+longDistanceRatioD);
 
 aw = figure(1);
-% subplot(2,1,1);
-ab = bar([1:size(longDistanceRatioA,2)],[longDistanceRatioA;longDistanceRatioC]');
-ab(1).FaceColor = 'b';
-ab(2).FaceColor = 'r';
+scatter(xCount(~isnan(longDistanceRatioA)),longDistanceRatioA(~isnan(longDistanceRatioA)),'o')
+hold on
+scatter(xCount(~isnan(longDistanceRatioC)),longDistanceRatioC(~isnan(longDistanceRatioC)),'x')
+hold on
+m = polyfit(xCount(~isnan(longDistanceRatioA)),longDistanceRatioA(~isnan(longDistanceRatioA)),1);
+plot(xCount(~isnan(longDistanceRatioA)),xCount(~isnan(longDistanceRatioA)).*m(1)+m(2),'b','LineWidth', 1);
+hold on
+m = polyfit(xCount(~isnan(longDistanceRatioC)),longDistanceRatioC(~isnan(longDistanceRatioC)),1);
+plot(xCount(~isnan(longDistanceRatioC)),xCount(~isnan(longDistanceRatioC)).*m(1)+m(2),'r','LineWidth', 1);
 ylabel('Long Distance Trajectory Ratio');
-legend('Non-active Gorup', 'Active Group')
+legend( 'Normal Group','AO')
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
@@ -420,12 +432,12 @@ set(gca,'XTickLabelRotation',30);
 % ab(1).FaceColor = 'b';
 % ab(2).FaceColor = 'r';
 % ylabel('Long Distance Trajectory Ratio');
-% legend('Non-active Gorup', 'Active Group')
+% legend( 'Normal Group','AO')
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
-
 set(aw, 'Position', [0 0 600 300]);
+saveas(aw,[dataSet,'/out/temp/long_distance_ratio.png']);
 
 
 % plot high speed trajectory bar plot
@@ -439,11 +451,17 @@ highSpeedRatioD = cell2mat(highSpeedTrajectoryCountG4)./cell2mat(trajectoryCount
 
 aw = figure(2);
 % subplot(2,1,1);
-ab = bar([1:size(highSpeedRatioA,2)],[highSpeedRatioA;highSpeedRatioC]');
-ab(1).FaceColor = 'b';
-ab(2).FaceColor = 'r';
+scatter(xCount(~isnan(highSpeedRatioA)),highSpeedRatioA(~isnan(highSpeedRatioA)),'o')
+hold on
+scatter(xCount(~isnan(highSpeedRatioC)),highSpeedRatioC(~isnan(highSpeedRatioC)),'x')
+hold on
+m = polyfit(xCount(~isnan(highSpeedRatioA)),highSpeedRatioA(~isnan(highSpeedRatioA)),1);
+plot(xCount(~isnan(highSpeedRatioA)),xCount(~isnan(highSpeedRatioA)).*m(1)+m(2),'b','LineWidth', 1);
+hold on
+m = polyfit(xCount(~isnan(highSpeedRatioC)),highSpeedRatioC(~isnan(highSpeedRatioC)),1);
+plot(xCount(~isnan(highSpeedRatioC)),xCount(~isnan(highSpeedRatioC)).*m(1)+m(2),'r','LineWidth', 1);
 ylabel('High Speed Trajectory Ratio');
-legend('Non-active Gorup', 'Active Group')
+legend( 'Normal Group','AO')
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
@@ -452,11 +470,12 @@ set(gca,'XTickLabelRotation',30);
 % ab(1).FaceColor = 'b';
 % ab(2).FaceColor = 'r';
 % ylabel('High Speed Trajectory Ratio');
-% legend('Non-active Gorup', 'Active Group')
+% legend( 'Normal Group','AO')
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
 set(aw, 'Position', [0 0 600 300]);
+saveas(aw,[dataSet,'/out/temp/high_speed_ratio.png']);
 
 % plot high detected time trajectory bar plot
 highDetectedTimeRatioA = cell2mat(highDetectedTimeTrajectoryCountG1)./cell2mat(trajectoryCountG1);
@@ -469,11 +488,17 @@ highDetectedTimeRatioD = cell2mat(highDetectedTimeTrajectoryCountG4)./cell2mat(t
 
 aw = figure(3);
 % subplot(2,1,1);
-ab = bar([1:size(highDetectedTimeRatioA,2)],[highDetectedTimeRatioA;highDetectedTimeRatioC]');
-ab(1).FaceColor = 'b';
-ab(2).FaceColor = 'r';
+scatter(xCount(~isnan(highDetectedTimeRatioA)),highDetectedTimeRatioA(~isnan(highDetectedTimeRatioA)),'o')
+hold on
+scatter(xCount(~isnan(highDetectedTimeRatioC)),highDetectedTimeRatioC(~isnan(highDetectedTimeRatioC)),'x')
+hold on
+m = polyfit(xCount(~isnan(highDetectedTimeRatioA)),highDetectedTimeRatioA(~isnan(highDetectedTimeRatioA)),1);
+plot(xCount(~isnan(highDetectedTimeRatioA)),xCount(~isnan(highDetectedTimeRatioA)).*m(1)+m(2),'b','LineWidth', 1);
+hold on
+m = polyfit(xCount(~isnan(highDetectedTimeRatioC)),highDetectedTimeRatioC(~isnan(highDetectedTimeRatioC)),1);
+plot(xCount(~isnan(highDetectedTimeRatioC)),xCount(~isnan(highDetectedTimeRatioC)).*m(1)+m(2),'r','LineWidth', 1);
 ylabel('High Detected Time Trajectory Ratio');
-legend('Non-active Gorup', 'Active Group')
+legend( 'Normal Group','AO')
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
@@ -482,12 +507,13 @@ set(gca,'XTickLabelRotation',30);
 % ab(1).FaceColor = 'b';
 % ab(2).FaceColor = 'r';
 % ylabel('High Detected Time Trajectory Ratio');
-% legend('Non-active Gorup', 'Active Group')
+% legend( 'Normal Group','AO')
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
-
 set(aw, 'Position', [0 0 600 300]);
+saveas(aw,[dataSet,'/out/temp/high_detected_ratio.png']);
+
 
 staticVarG1 = [];
 staticVarG2 = [];
@@ -515,7 +541,7 @@ ab = bar([1:size(staticRatioA,2)],[staticRatioA;staticRatioC]');
 ab(1).FaceColor = 'b';
 ab(2).FaceColor = 'r';
 ylabel('Static Pattern Ratio');
-legend('Non-active Gorup', 'Active Group')
+legend( 'Normal Group','AO')
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
@@ -524,11 +550,13 @@ set(gca,'XTickLabelRotation',30);
 % ab(1).FaceColor = 'b';
 % ab(2).FaceColor = 'r';
 % ylabel('Static Pattern Ratio');
-% legend('Non-active Gorup', 'Active Group')
+% legend( 'Normal Group','AO')
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
 set(aw, 'Position', [0 0 600 300]);
+saveas(aw,[dataSet,'/out/temp/static_pattern_ratio.png']);
+
 
 % loitering ratio
 loiteringRatioA = cell2mat(loiteringRatioG1)./cell2mat(trajectoryCountG1);
@@ -545,7 +573,7 @@ ab = bar([1:size(loiteringRatioA,2)],[loiteringRatioA;loiteringRatioC]');
 ab(1).FaceColor = 'b';
 ab(2).FaceColor = 'r';
 ylabel('Loitering Pattern Ratio');
-legend('Non-active Gorup', 'Active Group')
+legend( 'Normal Group','AO')
 set(gca,'YLim',[0.1 0.4],'YTick',0.1:0.1:0.4);
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
@@ -557,7 +585,7 @@ set(gca,'XTickLabelRotation',30);
 % ab(1).FaceColor = 'b';
 % ab(2).FaceColor = 'r';
 % ylabel('Loitering Pattern Ratio');
-% legend('Non-active Gorup', 'Active Group')
+% legend( 'Normal Group','AO')
 set(gca,'YLim',[0.1 0.4],'YTick',0.1:0.1:0.4);
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
@@ -565,6 +593,7 @@ set(gca,'XTickLabelRotation',30);
 set(aw, 'Position', [0 0 600 300]);
 set(gca,'XTickLabelRotation',30);
 set(aw, 'Position', [0 0 600 300]);
+saveas(aw,[dataSet,'/out/temp/loitering_pattern_ratio.png']);
 
 % moving ratio
 movingRatioA = cell2mat(movingRatioG1)./cell2mat(trajectoryCountG1);
@@ -581,7 +610,7 @@ ab = bar([1:size(movingRatioA,2)],[movingRatioA;movingRatioC]');
 ab(1).FaceColor = 'b';
 ab(2).FaceColor = 'r';
 ylabel('Moving Pattern Ratio');
-legend('Non-active Gorup', 'Active Group')
+legend( 'Normal Group','AO')
 set(gca,'YLim',[0.3 0.8],'YTick',0.3:0.1:0.8);
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
@@ -591,13 +620,14 @@ set(gca,'XTickLabelRotation',30);
 % ab(1).FaceColor = 'b';
 % ab(2).FaceColor = 'r';
 % ylabel('Moving Pattern Ratio');
-% legend('Non-active Gorup', 'Active Group')
+% legend( 'Normal Group','AO')
 set(gca,'YLim',[0.3 0.8],'YTick',0.3:0.1:0.8);
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
 
 set(aw, 'Position', [0 0 600 300]);
+saveas(aw,[dataSet,'/out/temp/moving_pattern_ratio.png']);
 
 % slow long trajectory
 slowLongRatioA = cell2mat(slowLongTrajectoryG1)./cell2mat(trajectoryCountG1);
@@ -610,11 +640,17 @@ slowLongRatioD = cell2mat(slowLongTrajectoryG4)./cell2mat(trajectoryCountG4);
 
 aw = figure(7);
 % subplot(2,1,1);
-ab = bar([1:size(slowLongRatioA,2)],[slowLongRatioA;slowLongRatioC]');
-ab(1).FaceColor = 'b';
-ab(2).FaceColor = 'r';
+scatter(xCount(~isnan(slowLongRatioA)),slowLongRatioA(~isnan(slowLongRatioA)),'o')
+hold on
+scatter(xCount(~isnan(slowLongRatioC)),slowLongRatioC(~isnan(slowLongRatioC)),'x')
+hold on
+m = polyfit(xCount(~isnan(slowLongRatioA)),slowLongRatioA(~isnan(slowLongRatioA)),1);
+plot(xCount(~isnan(slowLongRatioA)),xCount(~isnan(slowLongRatioA)).*m(1)+m(2),'b','LineWidth', 1);
+hold on
+m = polyfit(xCount(~isnan(slowLongRatioC)),slowLongRatioC(~isnan(slowLongRatioC)),1);
+plot(xCount(~isnan(slowLongRatioC)),xCount(~isnan(slowLongRatioC)).*m(1)+m(2),'r','LineWidth', 1);
 ylabel('Slow and Long Trajectory Ratio');
-legend('Non-active Gorup', 'Active Group')
+legend( 'Normal Group','AO')
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
@@ -623,11 +659,12 @@ set(gca,'XTickLabelRotation',30);
 % ab(1).FaceColor = 'b';
 % ab(2).FaceColor = 'r';
 % ylabel('Slow and Long Trajectory Ratio');
-% legend('Non-active Gorup', 'Active Group')
+% legend( 'Normal Group','AO')
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
 set(aw, 'Position', [0 0 600 300]);
+saveas(aw,[dataSet,'/out/temp/slow_long_ratio.png']);
 
 % plot high detected time trajectory bar plot
 detectedTimeA = cell2mat(detectedTimeG1)./IDListSizeG1;
@@ -638,11 +675,17 @@ detectedTimeD = cell2mat(detectedTimeG4)./IDListSizeG4;
 % detectedTimeB = detectedTimeB+detectedTimeD;
 aw = figure(8);
 % subplot(2,1,1);
-ab = bar([1:size(detectedTimeA,2)],[detectedTimeA;detectedTimeC]');
-ab(1).FaceColor = 'b';
-ab(2).FaceColor = 'r';
+scatter(xCount(~isnan(detectedTimeA)),detectedTimeA(~isnan(detectedTimeA)),'o')
+hold on
+scatter(xCount(~isnan(detectedTimeC)),detectedTimeC(~isnan(detectedTimeC)),'x')
+hold on
+m = polyfit(xCount(~isnan(detectedTimeA)),detectedTimeA(~isnan(detectedTimeA)),1);
+plot(xCount,xCount.*m(1)+m(2),'b','LineWidth', 1);
+hold on
+m = polyfit(xCount(~isnan(detectedTimeC)),detectedTimeC(~isnan(detectedTimeC)),1);
+plot(xCount(~isnan(detectedTimeC)),xCount(~isnan(detectedTimeC)).*m(1)+m(2),'r','LineWidth', 1);
 ylabel('Detected Time (sec)');
-legend('Non-active Gorup', 'Active Group')
+legend( 'Normal Group','AO')
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
@@ -651,29 +694,38 @@ set(gca,'XTickLabelRotation',30);
 % ab(1).FaceColor = 'b';
 % ab(2).FaceColor = 'r';
 % ylabel('Detected Time (sec)');
-% legend('Non-active Gorup', 'Active Group')
+% legend( 'Normal Group','AO')
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
 
 set(aw, 'Position', [0 0 600 300]);
+saveas(aw,[dataSet,'/out/temp/detected_time.png']);
+
+ratio = 0.001125;
 
 % plot distance bar plot
-distanceA = cell2mat(distanceG1)./IDListSizeG1;
-distanceB = cell2mat(distanceG2)./IDListSizeG2;
-distanceC = cell2mat(distanceG3)./IDListSizeG3;
-distanceD = cell2mat(distanceG4)./IDListSizeG4;
+distanceA = cell2mat(distanceG1)./IDListSizeG1.*ratio;
+distanceB = cell2mat(distanceG2)./IDListSizeG2.*ratio;
+distanceC = cell2mat(distanceG3)./IDListSizeG3.*ratio;
+distanceD = cell2mat(distanceG4)./IDListSizeG4.*ratio;
 
 % distanceA = distanceA+distanceC;
 % distanceB = distanceB+distanceD;
 
 aw = figure(9);
 % subplot(2,1,1);
-ab = bar([1:size(distanceA,2)],[distanceA;distanceC]');
-ab(1).FaceColor = 'b';
-ab(2).FaceColor = 'r';
-ylabel('Distance (pixels)');
-legend('Non-active Gorup', 'Active Group')
+scatter(xCount(~isnan(distanceA)),distanceA(~isnan(distanceA)),'o')
+hold on
+scatter(xCount(~isnan(distanceC)),distanceC(~isnan(distanceC)),'x')
+hold on
+m = polyfit(xCount(~isnan(distanceA)),distanceA(~isnan(distanceA)),1);
+plot(xCount(~isnan(distanceA)),xCount(~isnan(distanceA)).*m(1)+m(2),'b','LineWidth', 1);
+hold on
+m = polyfit(xCount(~isnan(distanceC)),distanceC(~isnan(distanceC)),1);
+plot(xCount(~isnan(distanceC)),xCount(~isnan(distanceC)).*m(1)+m(2),'r','LineWidth', 1);
+ylabel('Distance (cm)');
+legend( 'Normal Group','AO')
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
@@ -682,29 +734,36 @@ set(gca,'XTickLabelRotation',30);
 % ab(1).FaceColor = 'b';
 % ab(2).FaceColor = 'r';
 % ylabel('Distance (pixels)');
-% legend('Non-active Gorup', 'Active Group')
+% legend( 'Normal Group','AO')
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
 
 set(aw, 'Position', [0 0 600 300]);
+saveas(aw,[dataSet,'/out/temp/distance.png']);
 
 % plot velocity bar plot
-velocityA = cell2mat(velocityG1)./IDListSizeG1;
-velocityB = cell2mat(velocityG2)./IDListSizeG2;
-velocityC = cell2mat(velocityG3)./IDListSizeG3;
-velocityD = cell2mat(velocityG4)./IDListSizeG4;
+velocityA = cell2mat(velocityG1)./IDListSizeG1.*ratio;
+velocityB = cell2mat(velocityG2)./IDListSizeG2.*ratio;
+velocityC = cell2mat(velocityG3)./IDListSizeG3.*ratio;
+velocityD = cell2mat(velocityG4)./IDListSizeG4.*ratio;
 
 % velocityA = velocityA+velocityC;
 % velocityB = velocityA+velocityD;
 
 aw = figure(10);
 % subplot(2,1,1);
-ab = bar([1:size(velocityA,2)],[velocityA;velocityC]');
-ab(1).FaceColor = 'b';
-ab(2).FaceColor = 'r';
-ylabel('Velocity (pixels)');
-legend('Non-active Gorup', 'Active Group')
+scatter(xCount(~isnan(velocityA)),velocityA(~isnan(velocityA)),'o')
+hold on
+scatter(xCount(~isnan(velocityC)),velocityC(~isnan(velocityC)),'x')
+hold on
+m = polyfit(xCount(~isnan(velocityA)),velocityA(~isnan(velocityA)),1);
+plot(xCount(~isnan(velocityA)),xCount(~isnan(velocityA)).*m(1)+m(2),'b','LineWidth', 1);
+hold on
+m = polyfit(xCount(~isnan(velocityC)),velocityC(~isnan(velocityC)),1);
+plot(xCount(~isnan(velocityC)),xCount(~isnan(velocityC)).*m(1)+m(2),'r','LineWidth', 1);
+ylabel('Velocity (cm/sec)');
+legend( 'Normal Group','AO')
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
@@ -713,8 +772,9 @@ set(gca,'XTickLabelRotation',30);
 % ab(1).FaceColor = 'b';
 % ab(2).FaceColor = 'r';
 % ylabel('Velocity (pixels)');
-% legend('Non-active Gorup', 'Active Group')
+% legend( 'Normal Group','AO')
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
 set(aw, 'Position', [0 0 600 300]);
+saveas(aw,[dataSet,'/out/temp/velocity.png']);
