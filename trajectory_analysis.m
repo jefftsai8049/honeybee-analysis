@@ -324,6 +324,7 @@ errorbar(staticRatioB,staticVarG2,'r');
 % ab(1).FaceColor = 'b';
 % ab(2).FaceColor = 'r';
 ylabel('Static Pattern Ratio');
+xlabel('Date');
 % hold on
 % m = polyfit(xCount,staticRatioA,1);
 % plot(xCount,xCount.*m(1)+m(2),'b','LineWidth', 2);
@@ -360,6 +361,7 @@ errorbar(loiteringRatioB,loiteringVarG2,'r');
 % ab(1).FaceColor = 'b';
 % ab(2).FaceColor = 'r';
 ylabel('Loitering Pattern Ratio');
+xlabel('Date');
 hold on
 % m = polyfit(xCount,loiteringRatioA,1);
 % plot(xCount,xCount.*m(1)+m(2),'b','LineWidth', 2);
@@ -394,6 +396,7 @@ errorbar(movingRatioB,movingVarG2,'r');
 % ab(1).FaceColor = 'b';
 % ab(2).FaceColor = 'r';
 ylabel('Moving Pattern Ratio');
+xlabel('Date');
 % hold on
 % m = polyfit(xCount,movingRatioA,1);
 % plot(xCount,xCount.*m(1)+m(2),'b','LineWidth', 2);
@@ -444,6 +447,7 @@ hold on
 m = polyfit(xCount(G2Start:end),detectedTimeB(G2Start:end),1);
 plot(xCount(G2Start:end),xCount(G2Start:end).*m(1)+m(2),'r','LineWidth', 1);
 ylabel('Detected Time (sec)');
+xlabel('Date');
 legend('Age D+8','Age D+0')
 % legend('Freezingg Method','Vacuum Method')
 set(gca,'XTick',xTick);

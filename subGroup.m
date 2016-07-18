@@ -3,13 +3,19 @@ close all
 clc
 
 % subG1 = {'AF';'AO';'AR';'BA';'BB';'BG';'BK';'BL';'BO';'BP';'BR';'BS';'BU';'BY';'BZ';'CA';'CG';'CH';'CK';'CP';'EA';'FC';'FE';'FF';'FL';'FT';'FZ';'GL';'GP';};
-% subG1 = {'AA';'AC';'AG';'AL';'AP';'AR';'AT';'AV';'BB';'BF';'BH';'BO';'BP';'BP';'BR';'BT';'BY';'BZ';'CF';'CH';'CR';'CP';'CT';'CG';'CZ';'EB';'EG';'DA';'FB';'FE';'FF';'FC';'FG';'FH';'FL';'FK';'FR';'FT';'FY';'GA';'GB';'GC';'GF';'GK';'GP';'GO';'GT';'GZ'};;
+subG1 = {'AA';'AC';'AG';'AL';'AP';'AR';'AT';'AV';'BB';'BF';'BH';'BO';'BP';'BP';'BR';'BT';'BY';'BZ';'CF';'CH';'CR';'CP';'CT';'CG';'CZ';'EB';'EG';'DA';'FB';'FE';'FF';'FC';'FG';'FH';'FL';'FK';'FR';'FT';'FY';'GA';'GB';'GC';'GF';'GK';'GP';'GO';'GT';'GZ'};
 % subG1 = {'AR';'BB';'BO';'BP';'BR';'BY';'BZ';'CH';'CP';'FE';'FF';'FL';'GP'};
 % subG1 = {'AF';'AO';'BA';'BG';'BK';'BL';'BS';'BU';'CA';'CG';'CK';'CP';'EA';'FC';'FT';'FZ';'GL';};
 % subG1 = {'AF';'BG';'BP';'BO';'AO';'BB'};
-subG1 = {'AO'};
+% subG1 = {'AO'};
 
-subG2 = {'HB';'HE';'HL';'HO';'HS';'HZ';'KG';'KK';'KZ';'LH';'LL';'LO';'LP';'LS';'LY';'OA';'OB';'OH';'OO';'OY';'OZ';'PB';'PC';'PL';'PZ';'RA';'RB';'RE';'RF';'RK';'RO';'RR';'RT';'RU';};
+% subG2 = {'HB';'HE';'HL';'HO';'HS';'HZ';'KG';'KK';'KZ';'LH';'LL';'LO';'LP';'LS';'LY';'OA';'OB';'OH';'OO';'OY';'OZ';'PB';'PC';'PL';'PZ';'RA';'RB';'RE';'RF';'RK';'RO';'RR';'RT';'RU';};
+% subG2 = {'OO';'OZ';'HL';'HE';'LY';'RO';'RB';'OB';'RS';'RU';'RE';'RF';'RU';'RS';'KK';'HS';'OH';'PL';'OA';'OP';'HA';'OS';'HA'};
+% subG2 = {'OO';'HL';'HE';'RO';'RS';'BO';'RB';'RU';'HS';'RF';'PL';'OA';'OS';'HA'};
+% subG2 = {'HT';'HZ';'HF';'HS';'HA';'HL';'KF';'KT';'KS';'KU';'KP';'KL';'KK';'LC';'LA';'LB';'LC';'LZ';'LO';'LK';'LG';'LU';'OB';'OC';'OH';'OF';'OK';'OS';'OA';'OG';'OZ';'OO';'PA';'PG';'PC';'PR';'PO';'PZ';'PL';'PU';'PF';'PK';'PB';'PT';'RS';'RB';'RF';'RR';'RH';'RZ';'RC';'RY';'RU';'RP';'RG'};
+% subG2 = {'HL';'OO';'RS';'RB';'RF';'OS';'HA'};
+subG2 = {'HL'};
+% subG2 = {'OO';'OZ';'HL';'RB';'OB';'RS';'RU';'RF';'KK';'HS';'OH';'PL';'OA';'OS';'HA'};
 dataSet = 'bee_info_5_new';
 file = fopen([dataSet,'/all/trajectory_info.csv']);
 longDistanceThreshold = 1000;
@@ -405,9 +411,9 @@ xLabel = cell2mat(dateTimeList');
 xLabel = xLabel(floor(xTick),:);
 % plot long distance trajectory bar plot
 longDistanceRatioA = cell2mat(longDistanceTrajectoryCountG1)./cell2mat(trajectoryCountG1);
-longDistanceRatioB = cell2mat(longDistanceTrajectoryCountG2)./cell2mat(trajectoryCountG2);
+% longDistanceRatioA = cell2mat(longDistanceTrajectoryCountG2)./cell2mat(trajectoryCountG2);
 longDistanceRatioC = cell2mat(longDistanceTrajectoryCountG3)./cell2mat(trajectoryCountG3);
-longDistanceRatioD = cell2mat(longDistanceTrajectoryCountG4)./cell2mat(trajectoryCountG4);
+% longDistanceRatioC = cell2mat(longDistanceTrajectoryCountG4)./cell2mat(trajectoryCountG4);
 
 % longDistanceRatioA = (longDistanceRatioA+longDistanceRatioB);
 % longDistanceRatioC = (longDistanceRatioC+longDistanceRatioD);
@@ -423,7 +429,7 @@ hold on
 m = polyfit(xCount(~isnan(longDistanceRatioC)),longDistanceRatioC(~isnan(longDistanceRatioC)),1);
 plot(xCount(~isnan(longDistanceRatioC)),xCount(~isnan(longDistanceRatioC)).*m(1)+m(2),'r','LineWidth', 1);
 ylabel('Long Distance Trajectory Ratio');
-legend( 'Normal Group','AO')
+legend('Normal Interactive', 'Highly Interactive')
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
@@ -432,19 +438,21 @@ set(gca,'XTickLabelRotation',30);
 % ab(1).FaceColor = 'b';
 % ab(2).FaceColor = 'r';
 % ylabel('Long Distance Trajectory Ratio');
-% legend( 'Normal Group','AO')
+% legend('Normal Interactive', 'Highly Interactive')
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
 set(aw, 'Position', [0 0 600 300]);
-saveas(aw,[dataSet,'/out/temp/long_distance_ratio.png']);
+img = getframe(gcf);
+imwrite(img.cdata, [dataSet,'/out/temp/long_distance_ratio.png']);
+% saveas(gca,[dataSet,'/out/temp/long_distance_ratio.png']);
 
 
 % plot high speed trajectory bar plot
 highSpeedRatioA = cell2mat(highSpeedTrajectoryCountG1)./cell2mat(trajectoryCountG1);
-highSpeedRatioB = cell2mat(highSpeedTrajectoryCountG2)./cell2mat(trajectoryCountG2);
+% highSpeedRatioA = cell2mat(highSpeedTrajectoryCountG2)./cell2mat(trajectoryCountG2);
 highSpeedRatioC = cell2mat(highSpeedTrajectoryCountG3)./cell2mat(trajectoryCountG3);
-highSpeedRatioD = cell2mat(highSpeedTrajectoryCountG4)./cell2mat(trajectoryCountG4);
+% highSpeedRatioC = cell2mat(highSpeedTrajectoryCountG4)./cell2mat(trajectoryCountG4);
 
 % highSpeeeRatioA = highSpeedRatioA+highSpeedRatioC;
 % highSpeedRatioB = highSpeedRatioB+highSpeedRatioD;
@@ -461,7 +469,7 @@ hold on
 m = polyfit(xCount(~isnan(highSpeedRatioC)),highSpeedRatioC(~isnan(highSpeedRatioC)),1);
 plot(xCount(~isnan(highSpeedRatioC)),xCount(~isnan(highSpeedRatioC)).*m(1)+m(2),'r','LineWidth', 1);
 ylabel('High Speed Trajectory Ratio');
-legend( 'Normal Group','AO')
+legend('Normal Interactive', 'Highly Interactive')
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
@@ -470,18 +478,20 @@ set(gca,'XTickLabelRotation',30);
 % ab(1).FaceColor = 'b';
 % ab(2).FaceColor = 'r';
 % ylabel('High Speed Trajectory Ratio');
-% legend( 'Normal Group','AO')
+% legend('Normal Interactive', 'Highly Interactive')
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
 set(aw, 'Position', [0 0 600 300]);
-saveas(aw,[dataSet,'/out/temp/high_speed_ratio.png']);
+img = getframe(gcf);
+imwrite(img.cdata, [dataSet,'/out/temp/high_speed_ratio.png']);
+% saveas(awigh_,[dataSet,'/out/temp/hspeed_ratio.png']);
 
 % plot high detected time trajectory bar plot
 highDetectedTimeRatioA = cell2mat(highDetectedTimeTrajectoryCountG1)./cell2mat(trajectoryCountG1);
-highDetectedTimeRatioB = cell2mat(highDetectedTimeTrajectoryCountG2)./cell2mat(trajectoryCountG2);
+% highDetectedTimeRatioA = cell2mat(highDetectedTimeTrajectoryCountG2)./cell2mat(trajectoryCountG2);
 highDetectedTimeRatioC = cell2mat(highDetectedTimeTrajectoryCountG3)./cell2mat(trajectoryCountG3);
-highDetectedTimeRatioD = cell2mat(highDetectedTimeTrajectoryCountG4)./cell2mat(trajectoryCountG4);
+% highDetectedTimeRatioC = cell2mat(highDetectedTimeTrajectoryCountG4)./cell2mat(trajectoryCountG4);
 
 % highDetectedTimeRatioA = highDetectedTimeRatioA+highDetectedTimeRatioC;
 % highDetectedTimeRatioB = highDetectedTimeRatioB+highDetectedTimeRatioD;
@@ -498,7 +508,7 @@ hold on
 m = polyfit(xCount(~isnan(highDetectedTimeRatioC)),highDetectedTimeRatioC(~isnan(highDetectedTimeRatioC)),1);
 plot(xCount(~isnan(highDetectedTimeRatioC)),xCount(~isnan(highDetectedTimeRatioC)).*m(1)+m(2),'r','LineWidth', 1);
 ylabel('High Detected Time Trajectory Ratio');
-legend( 'Normal Group','AO')
+legend('Normal Interactive', 'Highly Interactive')
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
@@ -507,12 +517,14 @@ set(gca,'XTickLabelRotation',30);
 % ab(1).FaceColor = 'b';
 % ab(2).FaceColor = 'r';
 % ylabel('High Detected Time Trajectory Ratio');
-% legend( 'Normal Group','AO')
+% legend('Normal Interactive', 'Highly Interactive')
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
 set(aw, 'Position', [0 0 600 300]);
-saveas(aw,[dataSet,'/out/temp/high_detected_ratio.png']);
+img = getframe(gcf);
+imwrite(img.cdata,[dataSet,'/out/temp/high_detected_ratio.png']);
+% saveas(gca,[dataSet,'/out/temp/high_detected_ratio.png']);
 
 
 staticVarG1 = [];
@@ -528,9 +540,9 @@ end
 
 % static ratio
 staticRatioA = cell2mat(staticRatioG1)./cell2mat(trajectoryCountG1);
-staticRatioB = cell2mat(staticRatioG2)./cell2mat(trajectoryCountG2);
+% staticRatioA = cell2mat(staticRatioG2)./cell2mat(trajectoryCountG2);
 staticRatioC = cell2mat(staticRatioG3)./cell2mat(trajectoryCountG3);
-staticRatioD = cell2mat(staticRatioG4)./cell2mat(trajectoryCountG4);
+% staticRatioC = cell2mat(staticRatioG4)./cell2mat(trajectoryCountG4);
 
 % staticRatioA = staticRatioA+staticRatioC;
 % staticRatioB =staticRatioB+staticRatioD;
@@ -541,7 +553,7 @@ ab = bar([1:size(staticRatioA,2)],[staticRatioA;staticRatioC]');
 ab(1).FaceColor = 'b';
 ab(2).FaceColor = 'r';
 ylabel('Static Pattern Ratio');
-legend( 'Normal Group','AO')
+legend('Normal Interactive', 'Highly Interactive')
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
@@ -550,19 +562,21 @@ set(gca,'XTickLabelRotation',30);
 % ab(1).FaceColor = 'b';
 % ab(2).FaceColor = 'r';
 % ylabel('Static Pattern Ratio');
-% legend( 'Normal Group','AO')
+% legend('Normal Interactive', 'Highly Interactive')
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
 set(aw, 'Position', [0 0 600 300]);
-saveas(aw,[dataSet,'/out/temp/static_pattern_ratio.png']);
+img = getframe(gcf);
+imwrite(img.cdata,[dataSet,'/out/temp/static_pattern_ratio.png']);
+% saveas(aw,[dataSet,'/out/temp/static_pattern_ratio.png']);
 
 
 % loitering ratio
 loiteringRatioA = cell2mat(loiteringRatioG1)./cell2mat(trajectoryCountG1);
-loiteringRatioB = cell2mat(loiteringRatioG2)./cell2mat(trajectoryCountG2);
+% loiteringRatioA = cell2mat(loiteringRatioG2)./cell2mat(trajectoryCountG2);
 loiteringRatioC = cell2mat(loiteringRatioG3)./cell2mat(trajectoryCountG3);
-loiteringRatioD = cell2mat(loiteringRatioG4)./cell2mat(trajectoryCountG4);
+% loiteringRatioC = cell2mat(loiteringRatioG4)./cell2mat(trajectoryCountG4);
 
 % loiteringRatioA = loiteringRatioA+loiteringRatioC;
 % loiteringRatioB = loiteringRatioB+loiteringRatioD;
@@ -573,7 +587,7 @@ ab = bar([1:size(loiteringRatioA,2)],[loiteringRatioA;loiteringRatioC]');
 ab(1).FaceColor = 'b';
 ab(2).FaceColor = 'r';
 ylabel('Loitering Pattern Ratio');
-legend( 'Normal Group','AO')
+legend('Normal Interactive', 'Highly Interactive')
 set(gca,'YLim',[0.1 0.4],'YTick',0.1:0.1:0.4);
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
@@ -585,7 +599,7 @@ set(gca,'XTickLabelRotation',30);
 % ab(1).FaceColor = 'b';
 % ab(2).FaceColor = 'r';
 % ylabel('Loitering Pattern Ratio');
-% legend( 'Normal Group','AO')
+% legend('Normal Interactive', 'Highly Interactive')
 set(gca,'YLim',[0.1 0.4],'YTick',0.1:0.1:0.4);
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
@@ -593,13 +607,15 @@ set(gca,'XTickLabelRotation',30);
 set(aw, 'Position', [0 0 600 300]);
 set(gca,'XTickLabelRotation',30);
 set(aw, 'Position', [0 0 600 300]);
-saveas(aw,[dataSet,'/out/temp/loitering_pattern_ratio.png']);
+img = getframe(gcf);
+imwrite(img.cdata,[dataSet,'/out/temp/loitering_pattern_ratio.png']);
+% saveas(aw,[dataSet,'/out/temp/loitering_pattern_ratio.png']);
 
 % moving ratio
 movingRatioA = cell2mat(movingRatioG1)./cell2mat(trajectoryCountG1);
-movingRatioB = cell2mat(movingRatioG2)./cell2mat(trajectoryCountG2);
+% movingRatioA = cell2mat(movingRatioG2)./cell2mat(trajectoryCountG2);
 movingRatioC = cell2mat(movingRatioG3)./cell2mat(trajectoryCountG3);
-movingRatioD = cell2mat(movingRatioG4)./cell2mat(trajectoryCountG4);
+% movingRatioC = cell2mat(movingRatioG4)./cell2mat(trajectoryCountG4);
 
 % movingRatioA = movingRatioA+movingRatioC;
 % movingRatioB = movingRatioB+movingRatioD;
@@ -610,7 +626,7 @@ ab = bar([1:size(movingRatioA,2)],[movingRatioA;movingRatioC]');
 ab(1).FaceColor = 'b';
 ab(2).FaceColor = 'r';
 ylabel('Moving Pattern Ratio');
-legend( 'Normal Group','AO')
+legend('Normal Interactive', 'Highly Interactive')
 set(gca,'YLim',[0.3 0.8],'YTick',0.3:0.1:0.8);
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
@@ -620,20 +636,22 @@ set(gca,'XTickLabelRotation',30);
 % ab(1).FaceColor = 'b';
 % ab(2).FaceColor = 'r';
 % ylabel('Moving Pattern Ratio');
-% legend( 'Normal Group','AO')
+% legend('Normal Interactive', 'Highly Interactive')
 set(gca,'YLim',[0.3 0.8],'YTick',0.3:0.1:0.8);
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
 
 set(aw, 'Position', [0 0 600 300]);
-saveas(aw,[dataSet,'/out/temp/moving_pattern_ratio.png']);
+img = getframe(gcf);
+imwrite(img.cdata,[dataSet,'/out/temp/moving_pattern_ratio.png']);
+% saveas(aw,[dataSet,'/out/temp/moving_pattern_ratio.png']);
 
 % slow long trajectory
 slowLongRatioA = cell2mat(slowLongTrajectoryG1)./cell2mat(trajectoryCountG1);
-slowLongRatioB = cell2mat(slowLongTrajectoryG2)./cell2mat(trajectoryCountG2);
+% slowLongRatioA = cell2mat(slowLongTrajectoryG2)./cell2mat(trajectoryCountG2);
 slowLongRatioC = cell2mat(slowLongTrajectoryG3)./cell2mat(trajectoryCountG3);
-slowLongRatioD = cell2mat(slowLongTrajectoryG4)./cell2mat(trajectoryCountG4);
+% slowLongRatioC = cell2mat(slowLongTrajectoryG4)./cell2mat(trajectoryCountG4);
 
 % slowLongRatioA = slowLongRatioA+slowLongRatioC;
 % slowLongRatioB = slowLongRatioA+slowLongRatioD;
@@ -650,7 +668,7 @@ hold on
 m = polyfit(xCount(~isnan(slowLongRatioC)),slowLongRatioC(~isnan(slowLongRatioC)),1);
 plot(xCount(~isnan(slowLongRatioC)),xCount(~isnan(slowLongRatioC)).*m(1)+m(2),'r','LineWidth', 1);
 ylabel('Slow and Long Trajectory Ratio');
-legend( 'Normal Group','AO')
+legend('Normal Interactive', 'Highly Interactive')
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
@@ -659,18 +677,20 @@ set(gca,'XTickLabelRotation',30);
 % ab(1).FaceColor = 'b';
 % ab(2).FaceColor = 'r';
 % ylabel('Slow and Long Trajectory Ratio');
-% legend( 'Normal Group','AO')
+% legend('Normal Interactive', 'Highly Interactive')
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
 set(aw, 'Position', [0 0 600 300]);
-saveas(aw,[dataSet,'/out/temp/slow_long_ratio.png']);
+img = getframe(gcf);
+imwrite(img.cdata,[dataSet,'/out/temp/slow_long_ratio.png']);
+% saveas(aw,[dataSet,'/out/temp/slow_long_ratio.png']);
 
 % plot high detected time trajectory bar plot
 detectedTimeA = cell2mat(detectedTimeG1)./IDListSizeG1;
-detectedTimeB = cell2mat(detectedTimeG2)./IDListSizeG2;
+% detectedTimeA = cell2mat(detectedTimeG2)./IDListSizeG2;
 detectedTimeC = cell2mat(detectedTimeG3)./IDListSizeG3;
-detectedTimeD = cell2mat(detectedTimeG4)./IDListSizeG4;
+% detectedTimeC = cell2mat(detectedTimeG4)./IDListSizeG4;
 % detectedTimeA = detectedTimeA+detectedTimeC;
 % detectedTimeB = detectedTimeB+detectedTimeD;
 aw = figure(8);
@@ -680,12 +700,12 @@ hold on
 scatter(xCount(~isnan(detectedTimeC)),detectedTimeC(~isnan(detectedTimeC)),'x')
 hold on
 m = polyfit(xCount(~isnan(detectedTimeA)),detectedTimeA(~isnan(detectedTimeA)),1);
-plot(xCount,xCount.*m(1)+m(2),'b','LineWidth', 1);
+plot(xCount(~isnan(detectedTimeA)),xCount(~isnan(detectedTimeA)).*m(1)+m(2),'b','LineWidth', 1);
 hold on
 m = polyfit(xCount(~isnan(detectedTimeC)),detectedTimeC(~isnan(detectedTimeC)),1);
 plot(xCount(~isnan(detectedTimeC)),xCount(~isnan(detectedTimeC)).*m(1)+m(2),'r','LineWidth', 1);
 ylabel('Detected Time (sec)');
-legend( 'Normal Group','AO')
+legend('Normal Interactive', 'Highly Interactive')
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
@@ -694,21 +714,23 @@ set(gca,'XTickLabelRotation',30);
 % ab(1).FaceColor = 'b';
 % ab(2).FaceColor = 'r';
 % ylabel('Detected Time (sec)');
-% legend( 'Normal Group','AO')
+% legend('Normal Interactive', 'Highly Interactive')
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
 
 set(aw, 'Position', [0 0 600 300]);
-saveas(aw,[dataSet,'/out/temp/detected_time.png']);
+img = getframe(gcf);
+imwrite(img.cdata,[dataSet,'/out/temp/detected_time.png']);
+% saveas(aw,[dataSet,'/out/temp/detected_time.png']);
 
 ratio = 0.001125;
 
 % plot distance bar plot
 distanceA = cell2mat(distanceG1)./IDListSizeG1.*ratio;
-distanceB = cell2mat(distanceG2)./IDListSizeG2.*ratio;
+% distanceA = cell2mat(distanceG2)./IDListSizeG2.*ratio;
 distanceC = cell2mat(distanceG3)./IDListSizeG3.*ratio;
-distanceD = cell2mat(distanceG4)./IDListSizeG4.*ratio;
+% distanceC = cell2mat(distanceG4)./IDListSizeG4.*ratio;
 
 % distanceA = distanceA+distanceC;
 % distanceB = distanceB+distanceD;
@@ -725,7 +747,7 @@ hold on
 m = polyfit(xCount(~isnan(distanceC)),distanceC(~isnan(distanceC)),1);
 plot(xCount(~isnan(distanceC)),xCount(~isnan(distanceC)).*m(1)+m(2),'r','LineWidth', 1);
 ylabel('Distance (cm)');
-legend( 'Normal Group','AO')
+legend('Normal Interactive', 'Highly Interactive')
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
@@ -734,19 +756,21 @@ set(gca,'XTickLabelRotation',30);
 % ab(1).FaceColor = 'b';
 % ab(2).FaceColor = 'r';
 % ylabel('Distance (pixels)');
-% legend( 'Normal Group','AO')
+% legend('Normal Interactive', 'Highly Interactive')
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
 
 set(aw, 'Position', [0 0 600 300]);
-saveas(aw,[dataSet,'/out/temp/distance.png']);
+img = getframe(gcf);
+imwrite(img.cdata,[dataSet,'/out/temp/distance.png']);
+% saveas(aw,[dataSet,'/out/temp/distance.png']);
 
 % plot velocity bar plot
 velocityA = cell2mat(velocityG1)./IDListSizeG1.*ratio;
-velocityB = cell2mat(velocityG2)./IDListSizeG2.*ratio;
+% velocityA = cell2mat(velocityG2)./IDListSizeG2.*ratio;
 velocityC = cell2mat(velocityG3)./IDListSizeG3.*ratio;
-velocityD = cell2mat(velocityG4)./IDListSizeG4.*ratio;
+% velocityC = cell2mat(velocityG4)./IDListSizeG4.*ratio;
 
 % velocityA = velocityA+velocityC;
 % velocityB = velocityA+velocityD;
@@ -763,7 +787,7 @@ hold on
 m = polyfit(xCount(~isnan(velocityC)),velocityC(~isnan(velocityC)),1);
 plot(xCount(~isnan(velocityC)),xCount(~isnan(velocityC)).*m(1)+m(2),'r','LineWidth', 1);
 ylabel('Velocity (cm/sec)');
-legend( 'Normal Group','AO')
+legend('Normal Interactive', 'Highly Interactive')
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
@@ -772,9 +796,11 @@ set(gca,'XTickLabelRotation',30);
 % ab(1).FaceColor = 'b';
 % ab(2).FaceColor = 'r';
 % ylabel('Velocity (pixels)');
-% legend( 'Normal Group','AO')
+% legend('Normal Interactive', 'Highly Interactive')
 set(gca,'XTick',xTick);
 set(gca,'XTickLabel',xLabel);
 set(gca,'XTickLabelRotation',30);
 set(aw, 'Position', [0 0 600 300]);
-saveas(aw,[dataSet,'/out/temp/velocity.png']);
+img = getframe(gcf);
+imwrite(img.cdata,[dataSet,'/out/temp/velocity.png']);
+% saveas(aw,[dataSet,'/out/temp/velocity.png']);

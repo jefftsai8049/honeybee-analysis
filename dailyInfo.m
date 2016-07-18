@@ -78,6 +78,7 @@ y2 = cell2mat(info.IDSize);
 ax.XTickLabelRotation=30;
 set(px,'XLim',[0 days+1],'XTick',1:days,'XTickLabel',info.date);
 % set(px,'XLim',[0 days],'XTick',1:days-1,'XTickLabel',info.date(2:end));
+xlabel('Date');
 ylabel(px(1),'Effectively Trajectory')
 ylabel(px(2),'Detected Honeybee')
 % set(gcb,'XLim',[0 days+1]);
@@ -99,14 +100,15 @@ end
 
 set(bx,'NextPlot','add')
 plot(bx(2),linspace(startPoint,days,days-startPoint+1),cell2mat(info.G2TagSum(startPoint:days)),'bx-', 'LineWidth', 2);
-legend('Freezingg Method Trajectory Numbers','Vacuum Method Trajectory Numbers','Freezingg Method Honeybee Numbers','Vacuum Method Honeybee Numbers')
-% legend('Age D+8 Trajectory Numbers','Age D+0 Trajectory Numbers','Age D+8 Detected Honeybee Numbers','Age D+0 Detected Honeybee Numbers')
+% legend('Freezingg Method Trajectory Numbers','Vacuum Method Trajectory Numbers','Freezingg Method Honeybee Numbers','Vacuum Method Honeybee Numbers')
+legend('Age D+8 Trajectory Numbers','Age D+0 Trajectory Numbers','Age D+8 Detected Honeybee Numbers','Age D+0 Detected Honeybee Numbers')
 % legend('Field Bee Trajectory Numbers','In-hive Bee Trajectory Numbers','Field Bee Detected Honeybee Numbers','In-hive Bee Detected Honeybee Numbers')
 ax.XTickLabelRotation=30;
 set(bx(1),'YLim',[0 15000],'YTick',0:1000:15000);
 set(bx(2),'YLim',[0 100],'YTick',0:10:100);
 ylabel(bx(1),'Effectively Trajectory')
 ylabel(bx(2),'Detected Honeybee')
+
 set(bx,'XLim',[0 days+1],'XTick',1:days,'XTickLabel',info.date);
 
 ratio = y1./y2;
